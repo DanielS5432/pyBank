@@ -1,54 +1,22 @@
+from func import *
+
+import json
 import os
-import re
 
-regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+file_path = "db/accounts.json"
+
+if not os.path.exists(file_path):
+    with open(file_path, "w") as f:
+        json.dump([], f)
+
+with open(file_path, "r") as f:
+    try:
+        accounts = json.load(f)
+    except json.JSONDecodeError:
+        accounts = []
+
 adminPass = "Admin123"
-
 cancel = False
-accounts = []
-
-def clear():
-    os.system("cls")
-
-def quit():
-    clear()
-    print("- Goodbye! -\n")
-    
-def checkEmail(email):
-    if(re.fullmatch(regex, email)):
-        return True
-    else:
-        clear()
-        print("- This email is not valid! -\n")
-        
-def checkPass(password):
-    
-    if (len(password) < 6 or len(password) > 12):
-        clear()
-        print("- This password is not valid! -\n")
-        
-    elif not re.search("[a-z]", password):
-        clear()
-        print("- This password is not valid! -\n")
-
-    elif not re.search("[0-9]", password):
-        clear()
-        print("- This password is not valid! -\n")
-
-    elif not re.search("[A-Z]", password):
-        clear()
-        print("- This password is not valid! -\n")
-
-    elif not re.search("[$#@!_&]", password):
-        clear()
-        print("- This password is not valid! -\n")
-
-    elif re.search("\s", password):
-        clear()
-        print("- This password is not valid! -\n")
-        
-    else:
-        return True
     
 clear()
 while True:
@@ -78,7 +46,7 @@ while True:
                 continue
             else:
                 break
-            
+
         if cancel:
             continue
         
@@ -167,15 +135,68 @@ while True:
                 "name": name,
                 "email": email,
                 "age": age,
-                "password": password
+                "password": password,
+                "money": 0
             }
             clear()
             accounts.append(account)
+
+            with open(file_path, "w") as f:
+                json.dump(accounts, f, indent=4)
+
             print("- Account created successfully! -\n")
         
     elif choice == '2':
         clear()
         print("wip")
+    elif choice == '3':
+        cancel = False
+            
+        #################################
+        
+        clear()
+        while True:
+            print("- Type 'CANCEL' anytime to leave! -\n")
+            print("Insert the admin password.")
+            admin_inp = input(">> ")
+
+            if admin_inp.lower() == 'cancel':
+                clear()
+                cancel = True
+                break
+
+            if not admin_inp:
+                clear()
+                print("- Insert a password! -\n")
+                continue
+
+            if admin_inp == adminPass:
+                clear()
+                while True:
+                    print("+ ADMIN PANEL +\n\n[1] - Accounts List\n[2] - Remove Account\n[3] - Add Money\n[0] - Quit")
+                    admchoice = input(">> ")
+
+                    if admchoice == '1':
+                        print("accounts")
+                    elif admchoice == '2':
+                        print("remove")
+                    elif admchoice == '3':
+                        print("money")
+                    elif admchoice == '0':
+                        clear()
+                        cancel = True
+                        break
+                    else:
+                        clear()
+                        print("- Insert an available option! -\n")
+
+                if cancel == True:
+                    break
+
+            else:
+                clear()
+                print("- Incorrect password! -\n")
+
     elif choice == '0':
         quit()
         break
