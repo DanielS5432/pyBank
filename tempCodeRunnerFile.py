@@ -2,7 +2,6 @@ from func import *
 
 import json
 import os
-import bcrypt
 
 file_path = "db/accounts.json"
 
@@ -94,10 +93,6 @@ while True:
                     clear()
                     print("- Only people above the age of 18 can create an account. -\n")
                     continue
-                elif age > 100:
-                    clear()
-                    print("- Too old! -\n")
-                    continue
                 else:
                     break
             except ValueError:
@@ -108,7 +103,8 @@ while True:
         if cancel:
             continue
             
-        #################################        
+        #################################
+        
         clear()
         while True:
             print("- Type 'CANCEL' anytime to leave! -\n")
@@ -135,13 +131,11 @@ while True:
         #################################
         
         if not cancel:
-            hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-            
             account = {
                 "name": name,
                 "email": email,
                 "age": age,
-                "password": hashed_password,
+                "password": password,
                 "money": 0
             }
             clear()
@@ -183,59 +177,15 @@ while True:
                     admchoice = input(">> ")
 
                     if admchoice == '1':
-                        cancel = False
                         clear()
-                        
-                        if not accounts:
-                            print("- There are no accounts yet! -\n")
-                            cancel = True
-                            
-                        if cancel == True:
-                            continue
-                        
                         i = 1
                         for account in accounts:
                             print(f"- Account Number {i}-\n\n+ Name - {account['name']}\n+ Email - {account['email']}\n+ Age - {account['age']}\n+ Money - {account['money']}\n")
                             i += 1
                         input("- Insert anything to leave. -\n>> ")
                         clear()
-                        
                     elif admchoice == '2':
-                        cancel = False
-                        clear()
-                        
-                        if not accounts:
-                            print("- There are no accounts yet! -\n")
-                            cancel = True
-                            
-                        if cancel == True:
-                            continue
-                        
-                        while True:
-                            print("- Type 'CANCEL' anytime to leave! -\n")
-                            print("Insert the number of the account you want to remove.")
-                            removeid_inp = input(">> ")
-                            
-                            if removeid_inp.lower() == 'cancel':
-                                clear()
-                                cancel = True
-                                break
-                            
-                            try:
-                                removeid = int(removeid_inp)
-                                if removeid < 1 or removeid > len(accounts):
-                                    clear()
-                                    print("- This account number does not exist! -\n")
-                                    continue
-                                clear()
-                                accounts.pop(removeid - 1)
-                                print(f"- Account with the number {removeid} removed! -\n")
-                                break
-                            except ValueError:
-                                clear()
-                                print("- Insert a number! -\n")
-                                continue
-                        
+                        print("remove")
                     elif admchoice == '3':
                         print("money")
                     elif admchoice == '0':

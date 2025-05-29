@@ -3,7 +3,7 @@
         "name": "Daniel",
         "email": "daniel@gmail.com",
         "age": 19,
-        "password": "Daniel123!",
+        "password": "$2b$12$imLyjmYSDzfk1/o4VI711eb1tFMkgigcgsW01YL8lu1oHAhZ4jyWy",
         "money": 0
     }
 ]
