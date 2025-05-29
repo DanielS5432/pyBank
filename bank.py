@@ -179,7 +179,7 @@ while True:
             if admin_inp == adminPass:
                 clear()
                 while True:
-                    print("+ ADMIN PANEL +\n\n[1] - Accounts List\n[2] - Remove Account\n[3] - Add Money\n[0] - Quit")
+                    print("+ Admin Panel +\n\n[1] - Accounts List\n[2] - Remove Account\n[3] - Manage Money\n[0] - Quit")
                     admchoice = input(">> ")
 
                     if admchoice == '1':
@@ -237,7 +237,71 @@ while True:
                                 continue
                         
                     elif admchoice == '3':
-                        print("money")
+                        cancel = False
+                        clear()
+                        
+                        if not accounts:
+                            print("- There are no accounts yet! -\n")
+                            cancel = True
+                            
+                        if cancel == True:
+                            continue
+                        
+                        while True:
+                            print("- Type 'CANCEL' anytime to leave! -\n")
+                            print("Insert the number of the account you want to add money to.")
+                            moneyid_inp = input(">> ")
+                            
+                            if moneyid_inp.lower() == 'cancel':
+                                clear()
+                                cancel = True
+                                break
+                            
+                            try:
+                                moneyid = int(moneyid_inp)
+                                if moneyid < 1 or moneyid > len(accounts):
+                                    clear()
+                                    print("- This account number does not exist! -\n")
+                                    continue
+                                
+                                clear()
+                                while True:
+                                    print("+ Money Panel +\n\n[1] - Add Money\n[2] - Remove Money\n[0] - Quit")
+                                    managemoney = input(">> ")
+                                    
+                                    clear()
+                                    if managemoney == '1':
+                                        print("Insert the amount of money you wanna add.")
+                                        try:
+                                            moneyadd = int(input(">> "))
+                                            if moneyadd < 0:
+                                                clear()
+                                                print("- You cannot add a negative amount! -\n")
+                                                continue
+
+                                            accounts[moneyid - 1]["money"] += moneyadd
+
+                                            with open(file_path, "w") as f:
+                                                json.dump(accounts, f, indent=4)
+
+                                            clear()
+                                            print(f"- Added {moneyadd}$ to account number {moneyid} successfully! -\n")
+                                            break
+                                        except ValueError:
+                                            clear()
+                                            print("- Insert a valid number! -\n")
+                                    elif managemoney == '2':
+                                        print("teste")
+                                    elif managemoney == '0':
+                                        break
+                                    else:
+                                        print("- Insert an available option! -\n")
+                                    
+                            except ValueError:
+                                clear()
+                                print("- Insert a number! -\n")
+                                continue
+                            
                     elif admchoice == '0':
                         clear()
                         cancel = True

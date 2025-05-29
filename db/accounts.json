@@ -1,9 +1,9 @@
 [
     {
-        "name": "Daniel",
-        "email": "daniel@gmail.com",
-        "age": 19,
-        "password": "$2b$12$imLyjmYSDzfk1/o4VI711eb1tFMkgigcgsW01YL8lu1oHAhZ4jyWy",
+        "name": "Ricardo Abasov",
+        "email": "soares@email.pt.pt",
+        "age": 100,
+        "password": "$2b$12$AoMfCIa.2DZoSUlPWe89K.fhJnjSS65qxmoS0Dq2YmqQI0/lY2f0m",
         "money": 0
     }
 ]
